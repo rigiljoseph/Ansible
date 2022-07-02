@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: true
+  vars:
+    users1:
+      - testuser1
+      - testuser2
+      - testuser3
+      - testuser4
+      - testuser5
+
+  tasks:
+   - name: Creating users..
+     ansible.builtin.user:
+       name: "{{ item }}"
+       state: present
+     loop: "{{ users1 }}"
+
+   - name: copying file test1.txt
+     ansible.builtin.copy:
+       dest: "/home/{{ item }}/test1.txt"
+       content:
+        "Hello {{item}}  welcome to ansible"
+     loop:
+       "{{users1}}"
