@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+   users:
+    - testuser
+    - testuser2
+  tasks:
+  - name: ansible basic variable example
+    debug:
+     msg: "{{users [0]}}"
