@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: installing csf
+     ansible.builtin.get_url:
+      url: https://download.configserver.com/csf.tgz
+      dest: /var/www/
+   - name: Extracting CSF
+     ansible.builtin.unarchive:
+      src: /var/www/csf.tgz
+      dest: /var/www/
+      remote_src: yes
+   - name: installing
+     ansible.builtin.command:
+       chdir: /var/www/csf/ 
+       cmd: sh install.sh
+   - name: starting csf
+     service:
+      name: csf
+      state: started  
