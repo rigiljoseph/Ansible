@@ -1,0 +1,9 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: ssh port changing
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^Port='
+        line: 
+          Port=2222
