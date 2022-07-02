@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: true
+  vars:
+   users1:
+     - testuser
+     - testuser1
+     - testuser3
+     - testuser4
+     - testuser5
+
+  tasks:
+   - ansible.builtin.copy:
+      dest: "/home/{{ item }}/test1.txt"  
+      content:
+       "Hello {{item}}  welcome to ansible" 
+     loop:
+       "{{users1}}"
