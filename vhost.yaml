@@ -1,0 +1,29 @@
+---
+
+- hosts: all
+  become: true
+  vars:
+    domain: ansible.com
+    port: 80
+    conf: ansible.com.conf
+  tasks:
+  - name: creating document root directories
+    ansible.builtin.file:
+      path: /var/www/ansible.com/
+      state: directory
+      mode: 755
+
+  - name: creating index.php
+    ansible.builtin.copy:
+      dest: "/var/www/{{domain}}/index.php"
+      content: |
+        "Hello guysss how are you"
+
+  - name: set up Apache virtualhost
+    template:
+      src: /var/www/templetes/apache.conf.j2
+      dest: "/etc/apache2/sites-available/{{ conf}}"
+
+  - name: Enabling virtualhost..
+    ansible.builtin.command:
+      a2ensite {{ domain }}                                                                                                                                                                                                              
